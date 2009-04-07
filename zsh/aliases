@@ -98,5 +98,7 @@ alias -s gif=preview
 alias -s php=php
 alias -s py=python
 
+alias -s el=emacs
+
 # phone remote control
 alias phone_accept='curl "http://192.168.1.66/adr.htm?number=33"'
