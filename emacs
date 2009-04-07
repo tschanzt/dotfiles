@@ -10,3 +10,5 @@
   ))
 
 (if (file-exists-p (concat senny-config-dir "/local.el")) (load "local") )
+
+(server-start)

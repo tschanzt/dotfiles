@@ -2,6 +2,11 @@
 
 import os, sys
 
+if len(sys.argv)==1:
+    print 'ERROR: No parameter specified'
+    sys.exit(0)
+parameters = ' '.join(sys.argv[1:])
+
 path = ['.']
 
 zopeFound = False
@@ -11,8 +16,6 @@ while not zopeFound:
     dir = os.listdir('/'.join(path))
     if '/'==os.path.abspath('/'.join(path)):
         print 'ERROR: File system root reached: no zope instance found ..'
-        print 'Press any key ...'
-        raw_input()
         sys.exit(0)
     elif 'bin' in dir:
         binContents = os.listdir('/'.join(path+['bin']))
@@ -25,5 +28,7 @@ while not zopeFound:
         path.append('..')
 
 p = os.path.abspath('/'.join(path + ['bin', instances[0]]))
-os.system('%s stop' % p)
+cmd = '%s %s' % (p, parameters)
+print cmd
+os.system(cmd)
 

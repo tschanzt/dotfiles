@@ -8,7 +8,7 @@ alias grep='grep --color'
 alias Preview='/Applications/Preview.app/Contents/MacOS/Preview'
 
 # emacs
-alias e='/Applications/Aquamacs\ Emacs.app/Contents/MacOS/Aquamacs\ Emacs'
+alias e='emacsclient '
 
 # VIM
 alias gvimp='gvim -p'
@@ -39,6 +39,8 @@ alias gsm='git submodule init'
 # subversion
 alias setSvnExternals='svn propset svn:externals -F ./EXTERNALS.TXT .'
 alias setSvnIgnore='svn propset svn:ignore -F ./IGNORE.TXT .'
+alias ss="svn st | grep -v '^Performing' | grep -v '^$'"
+alias ssm="svn st | grep -v '^Performing' | grep -v '^$' | grep -v '^X'"
 
 rationalise-dot() {
 if [[ $LBUFFER = *.. ]]; then
@@ -65,6 +67,7 @@ alias ical='open -a ICal'
 alias finder='open -a Finder'
 alias notes='open -a Stickies'
 alias tasks='open -a TaskCoach'
+alias emacs='open -a Emacs'
 # http://github.com/Caged/gitnub/tree/master
 alias nub='open -a gitnub'
 
@@ -94,3 +97,6 @@ alias -s gif=preview
 
 alias -s php=php
 alias -s py=python
+
+# phone remote control
+alias phone_accept='curl "http://192.168.1.66/adr.htm?number=33"'

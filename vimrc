@@ -9,15 +9,24 @@ set fileformat=unix                 " default file format
 set scrolloff=1
 set backspace=indent,eol,start      " backspace should work as expected
 set vb                              " visual bell
-set ls=2                            " show filename in statusbar
+set ls=2                            " show filename in status bar
 set ruler                           " show position in statusbar
 set showmatch                       " show closing brackets
     " do not edit files of these types
 set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp
 autocmd BufEnter * lcd %:p:h        " always switch working directory to directory of current file
     "" highlight long lines (>81)
-hi LineTooLong cterm=bold ctermbg=red guibg=black
+hi LineTooLong cterm=bold   ctermbg=red     guibg=black
 match LineTooLong /\%>80v.\+/
+
+" spelling
+hi SpellBad ctermfg=white   ctermbg=red     guibg=red
+hi SpellCap ctermfg=white   ctermbg=blue    guibg=blue
+hi SpellRare ctermfg=white  ctermbg=magenta guibg=magenta
+set spelllang=de                    " use german language
+setlocal nospell                    " not activated
+map <D-0> :set invspell<CR>
+
 
 " macvim
 let macvim_skip_cmd_opt_movement = 1
@@ -69,7 +78,7 @@ map <silent> <F2> :if &guioptions =~# 'T' <Bar>
                     \endif<CR>
 " Map F3: Switch to bigger resolution / set new window size
 if has("gui_running")
-    map <silent> <F3> :set lines=66<CR>
+    map <silent> <F3> :set lines=66<CR>:set columns=202<CR>
 endif
 
 " TABS
@@ -121,12 +130,15 @@ map W :set list!<CR>
 map _ :tabnew<CR>:e ~/.vimrc<CR>
     " + : edit vimnotes
 map + :tabnew<CR>:e ~/.vim/vimnotes<CR>
+    " spell checking with aspell
+map <C-T> :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 "" logging, zope, python
-map lo :!~/.bin/taillog<CR>
+map lo :!~/.bin/zopeinstance logtail<CR>
 map lp :!~/.bin/taillog open<CR>
-map zr :!~/.bin/restartzope<CR>
-map zo :!~/.bin/stopzope<CR>
+map zr :!~/.bin/zopeinstance restart<CR>
+map zo :!~/.bin/zopeinstance stop<CR>
+map zf :!~/.bin/zopeinstance fg<CR>
 map <A-D-p> <ESC>oimport pdb;pdb.set_trace()
 
 
@@ -139,10 +151,15 @@ autocmd BufRead *.txt set filetype=doctest
 
 
 "" FILETYPE (EXECUTE)
-autocmd FileType python map <F5> :w<CR>:!python2.5 "%"<CR>
+autocmd FileType python map <F5> :w<CR>:!python2.4 "%"<CR>
 autocmd FileType php map <F5> :w<CR>:!php "%"<CR>
 autocmd FileType tex map <F5> :w<CR>:!/usr/texbin/pdflatex "%";/usr/texbin/pdflatex "%";open %:r.pdf<CR>
 autocmd FileType tex map <F4> :w<CR>:!clearLatexCache<CR>
+"autocmd FileType tex map <F5> :w<CR>:!./build<CR>
+autocmd FileType tex map <S-F5> :w<CR>:!/usr/texbin/pdflatex %<CR>
+autocmd FileType tex map <D-S-F5> :w<CR>:!/usr/texbin/pdflatex bericht.tex<CR>!open bericht.pdf<CR>
+"autocmd FileType tex map <F4> :w<CR>:!./clean<CR>
+autocmd FileType sh map <F5> :w<CR>:!./%<CR>
 au BufNewFile,BufRead *.textile setf textile
 
 
@@ -184,4 +201,5 @@ nmap gg :Bgrep
 nmap gG :tabnew<CR>:Bgrep 
     " grep notes
 nmap gn :exe 'Grep -r ' . input('Pattern:') . ' ~/Documents/notes'<CR>
+nmap gN :tabnew<CR>:e ~/Documents/notes<CR>:lcd ~/Documents/notes<CR>
 

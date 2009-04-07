@@ -1,0 +1,7 @@
+#!/bin/sh
+
+sudo su
+cp /etc/hosts /etc/hosts.bak
+echo "127.0.0.1 svn.cubetech.ch" >> /etc/hosts
+ssh jone@sv3.cubetech.ch -L443:localhost:443
+mv /etc/hosts.bak /etc/hosts
