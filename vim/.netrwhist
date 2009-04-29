@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/jone/projects/ftw.shop/buildout/src/ftw.shop.core/docs'
-let g:netrw_dirhist_2='/Users/jone/projects/ftw.shop/buildout/src/ftw.shop.core/ftw'
-let g:netrw_dirhist_3='/Users/jone/projects/ftw.shop/buildout/src/ftw.shop.core/ftw.shop.egg-info'
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/jone/projects/wetzikon/buildout/src'
+let g:netrw_dirhist_2='/Users/jone/projects/izug/buildout/src/izug.bibliothek/izug/bibliothek/latex'
+let g:netrw_dirhist_3='/Users/jone/projects/izug/buildout/src/izug.bibliothek/izug/bibliothek'
+let g:netrw_dirhist_4='/Users/jone/projects/izug/buildout/src/izug.bibliothek/izug/bibliothek/browser'

@@ -200,6 +200,6 @@ let Grep_Default_Options = '-i'
 nmap gg :Bgrep 
 nmap gG :tabnew<CR>:Bgrep 
     " grep notes
+nmap gD :exe 'Grep -r ' . input('Pattern:') . ' .'<CR>
 nmap gn :exe 'Grep -r ' . input('Pattern:') . ' ~/Documents/notes'<CR>
 nmap gN :tabnew<CR>:e ~/Documents/notes<CR>:lcd ~/Documents/notes<CR>
-
