@@ -6,6 +6,10 @@ ga  = print CHARCODE under cursor
 VU  = uppercase
 Vu  = lowercase
 
+q[X]    = start recording and store to key [X]
+q       = stop recording
+@[X]    = play [X]
+
 switch dos <-> unix
     set ff=dos
     set ff=unix

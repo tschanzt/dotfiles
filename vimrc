@@ -79,6 +79,7 @@ map <silent> <F2> :if &guioptions =~# 'T' <Bar>
 " Map F3: Switch to bigger resolution / set new window size
 if has("gui_running")
     map <silent> <F3> :set lines=66<CR>:set columns=202<CR>
+    map <silent> <S-F3> :set lines=100<CR>:set columns=300<CR>
 endif
 
 " TABS
@@ -132,6 +133,26 @@ map _ :tabnew<CR>:e ~/.vimrc<CR>
 map + :tabnew<CR>:e ~/.vim/vimnotes<CR>
     " spell checking with aspell
 map <C-T> :w!<CR>:!aspell check %<CR>:e! %<CR>
+    " toggle syntax
+map <D-9> :if exists("syntax_on") \| syntax off \| else \| syntax enable \| endif<CR>
+    " disable "LineTooLong"
+map <D-0> :match LineTooLong //<CR>
+
+"" general shortcut mappings
+map qe :e<CR>
+map qqe :e!<CR>
+map qw :w<CR>
+map qqw :w!<CR>
+
+" recording
+map <F13> @a
+map <S-F13> qa
+map <F14> @b
+map <S-F14> qb
+map <F15> @c
+map <S-F15> qc
+map <F16> @d
+map <S-F16> qd
 
 "" logging, zope, python
 map lo :!~/.bin/zopeinstance logtail<CR>
@@ -154,6 +175,7 @@ autocmd BufRead *.txt set filetype=doctest
 autocmd FileType python map <F5> :w<CR>:!python2.4 "%"<CR>
 autocmd FileType php map <F5> :w<CR>:!php "%"<CR>
 autocmd FileType tex map <F5> :w<CR>:!/usr/texbin/pdflatex "%";/usr/texbin/pdflatex "%";open %:r.pdf<CR>
+autocmd FileType tex map <F5> :w<CR>:!/usr/texbin/pdflatex "export.tex";/usr/texbin/pdflatex "export.tex";open export.pdf<CR>
 autocmd FileType tex map <F4> :w<CR>:!clearLatexCache<CR>
 "autocmd FileType tex map <F5> :w<CR>:!./build<CR>
 autocmd FileType tex map <S-F5> :w<CR>:!/usr/texbin/pdflatex %<CR>

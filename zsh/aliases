@@ -22,6 +22,9 @@ alias apache2ctl='sudo /opt/local/apache2/bin/apachectl'
 alias mysqlstart='sudo mysqld_safe5 &'
 alias mysqlstop='mysqladmin5 -u root -p shutdown'
 
+# rails
+alias rss='script/server'
+
 # hamachi
 alias hamachi='sudo hamachi'
 

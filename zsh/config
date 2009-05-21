@@ -46,4 +46,10 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 namedir izug /Users/jone/projects/izug/
 namedir skriptorium /Users/jone/projects/skriptorium/
 
-bindkey '^?' backward-delete-char echo bindkey '^[[3~' delete-char
+bindkey "^[[3~" delete-char             # Del
+bindkey "^[[5~" up-line-or-history      # PageUp
+bindkey "^[[6~" down-line-or-history    # PageDown
+bindkey "^[[A"  up-line-or-search       # Up arrow for back-history-search.
+bindkey "^[[B"  down-line-or-search     # Down arrow for fwd-history-search.
+bindkey " "     magic-space             # Do history expansion on space.
+#bindkey '^?' backward-delete-char echo bindkey '^[[3~' delete-char
