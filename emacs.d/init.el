@@ -45,7 +45,7 @@
 
 (require 'package)
 (package-initialize)
-(REQUIRE 'starter-kit-elpa)
+(require 'starter-kit-elpa)
 
 ;; Load up starter kit customizations
 
@@ -58,7 +58,6 @@
 (require 'starter-kit-perl)
 (require 'starter-kit-ruby)
 (require 'starter-kit-js)
-
 (regen-autoloads)
 (load custom-file 'noerror)
 

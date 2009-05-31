@@ -2,7 +2,7 @@
 
 PS1='%3~$(git_branch_for_prompt)%# '
 #PS1='%3~$(git_branch_for_prompt)$%# '
-EDITOR='vi'
+export EDITOR='mvim --remote-tab-wait'
 PATH="/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/git/bin:$PATH"
 PATH="$HOME/bin:$HOME/.bin:$PATH"
 MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
@@ -46,10 +46,20 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 namedir izug /Users/jone/projects/izug/
 namedir skriptorium /Users/jone/projects/skriptorium/
 
+# http://www.cs.elte.hu/zsh-manual/zsh_14.html
 bindkey "^[[3~" delete-char             # Del
 bindkey "^[[5~" up-line-or-history      # PageUp
 bindkey "^[[6~" down-line-or-history    # PageDown
 bindkey "^[[A"  up-line-or-search       # Up arrow for back-history-search.
 bindkey "^[[B"  down-line-or-search     # Down arrow for fwd-history-search.
+bindkey "^A"    beginning-of-line
+bindkey "^[[A~"    beginning-of-line
+bindkey "^E"    end-of-line
 bindkey " "     magic-space             # Do history expansion on space.
 #bindkey '^?' backward-delete-char echo bindkey '^[[3~' delete-char
+bindkey "^[[1;2D"  backward-word        # Shift-LeftArrow
+bindkey "^[[1;2C"  forward-word         # Shift-RightArrow
+bindkey "^J"    self-insert             # Shift-Enter for \n
+bindkey "^W"    delete-word             # Ctrl+W
+bindkey "^D"    backward-delete-word    # Ctrl+D
+bindkey "^O"    overwrite-mode          # Ctrl+O

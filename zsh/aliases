@@ -38,6 +38,7 @@ alias gco='git checkout'
 alias gb='git branch'
 alias gs='git status'
 alias gsm='git submodule init'
+alias gf='git fetch'
 
 # subversion
 alias setSvnExternals='svn propset svn:externals -F ./EXTERNALS.TXT .'

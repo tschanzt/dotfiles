@@ -32,3 +32,5 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
     qmailp qmailq qmailr qmails shutdown smmsp squid sshd sync \
     uucp vpopmail xfs \
     `cat /etc/passwd | grep ^_ | cut -d ':' -f 1`
+
+bindkey '^[[Z' reverse-menu-complete

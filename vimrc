@@ -182,6 +182,7 @@ autocmd FileType tex map <S-F5> :w<CR>:!/usr/texbin/pdflatex %<CR>
 autocmd FileType tex map <D-S-F5> :w<CR>:!/usr/texbin/pdflatex bericht.tex<CR>!open bericht.pdf<CR>
 "autocmd FileType tex map <F4> :w<CR>:!./clean<CR>
 autocmd FileType sh map <F5> :w<CR>:!./%<CR>
+autocmd FileType ruby map <F5> :w<CR>:!ruby %<CR>
 au BufNewFile,BufRead *.textile setf textile
 
 

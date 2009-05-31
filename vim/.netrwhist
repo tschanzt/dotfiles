@@ -1,3 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/Users/jone/projects/dotfiles/zsh'
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/jone/projects/skriptorium/new_buildout/products/skriptorium/browser'
+let g:netrw_dirhist_2='/Users/jone/projects/event_observer/event_observer/spec'
+let g:netrw_dirhist_3='/Users/jone/projects/event_observer/event_observer/spec/event_observer'
+let g:netrw_dirhist_4='/Users/jone/projects/event_observer/event_observer/spec/event_observer/adapters'
+let g:netrw_dirhist_5='/Users/jone/projects/event_observer/event_observer/spec/event_observer'
+let g:netrw_dirhist_6='/Users/jone/projects/event_observer/event_observer/spec/event_observer/parser'

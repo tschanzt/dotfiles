@@ -1,4 +1,4 @@
 #!/bin/sh
 
 blubb=`echo "$1"|sed s/+41/0/ | sed s/[^0-9]//g`
-curl "http://192.168.1.66/adr.htm?number=9$blubb"
+curl "http://192.168.1.66/adr.htm?number=$blubb"
