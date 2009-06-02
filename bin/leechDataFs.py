@@ -16,7 +16,7 @@ class DBLeecher(object):
         self.backup_and_untar()
 
     def askDomain(self):
-        self.domain = raw_input('Enter Productive-Domain (e.g. www.boe-online.ch): ')
+        self.domain = raw_input('Enter Productive-Domain (e.g. www.domain.com): ')
 
     def getUrl(self, postfix):
         return 'http://%s/%s' % (self.domain, postfix)
