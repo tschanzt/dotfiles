@@ -110,7 +110,7 @@ class DBLeecher(object):
 
     def copy_database(self):
         print 'Trying to copy .fs-file to a tar-archive. SSH may prompt you for a password'
-        user_part = self.get_ssh_user() and '%s@' % sef.get_ssh_user() or ''
+        user_part = self.get_ssh_user() and '%s@' % self.get_ssh_user() or ''
         database = self.get_selected_db()
         self.run_cmd('ssh %s%s tar -czf %s -C %s %s' % (
             user_part,
@@ -123,7 +123,7 @@ class DBLeecher(object):
     def leech_database(self):
         self.copy_database()
         database = self.get_selected_db()
-        user_part = self.get_ssh_user() and '%s@' % sef.get_ssh_user() or ''
+        user_part = self.get_ssh_user() and '%s@' % self.get_ssh_user() or ''
         cmd = 'sftp %s%s:%s var/filestorage/%s/' % (
             user_part,
             self.domain,
