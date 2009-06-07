@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/jone/projects/boe-online.ch/buildout.productive/eggs/collective.singing-0.6.11-py2.4.egg/collective/singing/browser'
-let g:netrw_dirhist_2='/Users/jone/projects/boe-online.ch/buildout.productive/eggs/collective.dancing-0.8.9-py2.4.egg/collective/dancing/browser'
-let g:netrw_dirhist_3='/Users/jone/projects/boe-online.ch/buildout.development'
