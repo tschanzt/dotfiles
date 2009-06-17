@@ -1,0 +1,94 @@
+#!/usr/bin/python
+
+import os, sys
+import subprocess
+
+LOCAL_REPOS = '/Users/jone/projects/gitsvn/'
+
+def quit(msg):
+    print ''
+    print '  ERROR:',msg
+    sys.exit(0)
+
+def runcmd(cmd):
+    p = os.popen(cmd, 'r')
+    l = p.readlines()
+    p.close()
+    return l
+
+def runcmdat(cmd, path, output=0):
+    current_dir = os.getcwd()
+    os.chdir(path)
+    r = ''
+    if output:
+        print '>', cmd
+        os.system(cmd)
+    else:
+        r = runcmd(cmd)
+    os.chdir(current_dir)
+    return r
+
+
+
+# is svn ?
+if not os.path.isdir('.svn'):
+    quit('not in a svn checkout-directory')
+
+# location
+url = runcmd('svn info | grep URL | cut -d " " -f 2')[0].strip()
+url_parts = url.split('/')
+url_projectdir = ''
+url_gitbranch = 'master'
+project_name = ''
+if url_parts[-1]=='trunk':
+    url_projectdir = '/'.join(url_parts[:-1])
+    url_gitbranch = 'master'
+    project_name = url_parts[-2]
+elif url_parts[-2]!='branches':
+    url_projectdir = '/'.join(url_parts[:-2])
+    url_gitbranch = 'remotes/%s' % url_gitbranch[-1]
+    project_name = url_parts[-3]
+else:
+    quit('not directly within trunk or a branch (tags are not supported, swith to trunk first)')
+print ' ', 'SVN URL:      ', url
+print ' ', 'PROJECT URL:  ', url_projectdir
+print ' ', 'PROJECT NAME: ', project_name
+print ' ', 'TARGET BRANCH:', url_gitbranch
+print ''
+
+# svn status
+svn_status = ''.join(runcmd('svn status'))
+if len(svn_status.strip())>0:
+    quit('local modifications must be commited first. "svn status" gives:\n%s' % svn_status)
+
+# local git repo?
+local_repo = os.path.join(LOCAL_REPOS, project_name)
+if os.path.isdir(local_repo):
+    print '  found local git repo: %s' % local_repo
+    local_repo_svnurl = runcmdat('git svn info | grep URL | cut -d " " -f 2', local_repo)[0].strip()
+    local_url_parts = local_repo_svnurl.split('/')
+    local_repo_projectdir = ''
+    if local_url_parts[-1]=='trunk':
+        local_repo_projectdir = '/'.join(local_url_parts[:-1])
+    elif local_url_parts[-2]=='branches':
+        local_repo_projectdir = '/'.join(local_url_parts[:-2])
+    if local_repo_projectdir!=url_projectdir:
+        quit('  local git repo has the same name but isnt the same project: %s' % local_repo_projectdir)
+else:
+    print '  no local git repo found. getting one. this ma take a while...'
+    runcmdat('git svn clone --stdlayout %s' % url_projectdir, LOCAL_REPOS, output=True)
+
+# remove svn, get git repo
+current_dir_name = os.path.basename(os.getcwd())
+os.chdir('..')
+print '  removing svn directory'
+runcmd('rm -rf %s' % current_dir_name.replace(' ', r'\ '))
+
+print '  copying git repo from %s' % local_repo
+runcmd('cp -r %s %s' % (
+    local_repo.replace(' ', r'\ '),
+    current_dir_name.replace(' ', r'\ '),
+))
+
+print '  all done.. have fun'
+
