@@ -44,9 +44,9 @@ if url_parts[-1]=='trunk':
     url_projectdir = '/'.join(url_parts[:-1])
     url_gitbranch = 'master'
     project_name = url_parts[-2]
-elif url_parts[-2]!='branches':
+elif url_parts[-2]=='branches':
     url_projectdir = '/'.join(url_parts[:-2])
-    url_gitbranch = 'remotes/%s' % url_gitbranch[-1]
+    url_gitbranch = 'remotes/%s' % url_parts[-1]
     project_name = url_parts[-3]
 else:
     quit('not directly within trunk or a branch (tags are not supported, swith to trunk first)')
@@ -79,16 +79,22 @@ else:
     runcmdat('git svn clone --stdlayout %s' % url_projectdir, LOCAL_REPOS, output=True)
 
 # remove svn, get git repo
-current_dir_name = os.path.basename(os.getcwd())
-os.chdir('..')
 print '  removing svn directory'
-runcmd('rm -rf %s' % current_dir_name.replace(' ', r'\ '))
+runcmd('rm -rf * .svn')
 
 print '  copying git repo from %s' % local_repo
-runcmd('cp -r %s %s' % (
+runcmd('cp -r %s/.git .' % (
     local_repo.replace(' ', r'\ '),
-    current_dir_name.replace(' ', r'\ '),
 ))
+
+print '  checking out %s' % url_gitbranch
+runcmd('git checkout %s' % url_gitbranch)
+
+print '  resetting'
+runcmd('git reset --hard')
+
+print '  rebasing'
+runcmd('git svn rebase')
 
 print '  all done.. have fun'
 
