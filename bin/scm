@@ -34,6 +34,13 @@ class SCM(object):
                 'st' :      self.stat_action,
                 'ignore' :  self.ignore_action,
                 'i' :       self.ignore_action,
+                'l' :       self.pull_action,
+                'pull' :    self.pull_action,
+                'p' :       self.push_action,
+                'push' :    self.push_action,
+                'url' :     self.url_action,
+                'sw' :      self.switch_action,
+                'switch' :  self.switch_action,
         }
  
 
@@ -49,7 +56,44 @@ class SCM(object):
         """
         runcmd('cp IGNORE.txt .gitignore')
         runcmd('echo "\n.gitignore" >> .gitignore')
-        
+
+    def pull_action(self):
+        """
+        Fetch and rebase
+        """
+        if self.is_svn():
+            runcmd('svn up')
+            runcmd('scmStat pull')
+        else:
+            runcmd('git svn fetch')
+            runcmd('git svn rebase')
+
+    def push_action(self):
+        """
+        Push (dcommit) -> only git
+        """
+        if self.is_svn():
+            runcmd('scmStat push')
+        else:
+            runcmd('git svn dcommit')
+
+    def url_action(self):
+        """
+        Shows svn-URL
+        """
+        if self.is_svn():
+            runcmd('svn info | grep URL')
+        else:
+            runcmd('git svn info | grep URL')
+
+    def switch_action(self):
+        """
+        Switches a svn repo to git (using command switchSvn2Git)
+        """
+        runcmd('switchSvn2Git')
+
+    def is_svn(self):
+        return os.path.isdir('.svn')
 
 def runcmd(cmd, log=True, respond=False):
     if log:
