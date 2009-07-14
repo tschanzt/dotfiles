@@ -43,7 +43,7 @@ def show_status():
     dirs.sort()
 
     table = ASCIITable(*[ColorString(x, 'yellow_bold') for x in
-            ('SCM', 'CHG', 'DIR', 'BRANCH')
+            ('SCM', 'CHG', 'DIR', 'BRANCH', 'LATEST')
     ])
 
     for dir in dirs:
@@ -51,6 +51,7 @@ def show_status():
         isSvn = os.path.isdir(os.path.join(dir, '.svn'))
         changes = ''
         branch = ''
+        latest = ''
         if isSvn:
             if len(runcmd('svn status %s' % dir)) > 0:
                 changes = ColorString(' !', 'red_bold')
@@ -71,11 +72,19 @@ def show_status():
                 branch = ColorString(branch, 'green')
             else:
                 branch = ColorString(branch, 'yellow_bold')
+            tags = []
+            for tag in [x.strip() for x in runcmd(r'cd %s ; git branch -a | grep tags | cut -d "/" -f 3' % dir)]:
+                if tag[0]=='v':
+                    tag = tag[1:]
+                tags.append(tag)
+            tags.sort()
+            latest = tags[-1]
         table.push((
                 isGit and ColorString('git', 'green') or isSvn and ColorString('svn', 'red') or '',
                 changes,
                 dir,
-                branch
+                branch,
+                latest
         ))
     table()
 
