@@ -77,8 +77,7 @@ alias finder='open -a Finder'
 alias notes='open -a Stickies'
 alias tasks='open -a TaskCoach'
 alias emacs='open -a Emacs'
-# http://github.com/Caged/gitnub/tree/master
-alias nub='open -a gitnub'
+alias seleniumrc='/Users/jone/Apps/selenium-server-1.0.1/start_selenium_rc.sh'
 
 # python stuff
 alias manager='bin/manager/manager.py'
