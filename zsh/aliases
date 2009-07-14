@@ -80,8 +80,9 @@ alias emacs='open -a Emacs'
 # http://github.com/Caged/gitnub/tree/master
 alias nub='open -a gitnub'
 
-# django stuff
+# python stuff
 alias manager='bin/manager/manager.py'
+alias eggdist='python2.4 setup.py mregister sdist bdist_egg mupload -r '
 
 #Extensions
 alias -s pdf=preview
