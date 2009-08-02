@@ -78,6 +78,7 @@ alias finder='open -a Finder'
 alias notes='open -a Stickies'
 alias tasks='open -a TaskCoach'
 alias emacs='open -a Emacs'
+alias taskcoach='open -a TaskCoach'
 alias seleniumrc='/Users/jone/Apps/selenium-server-1.0.1/start_selenium_rc.sh'
 
 # python stuff
@@ -109,6 +110,7 @@ alias -s php=php
 alias -s py=python
 
 alias -s el=emacs
+alias -s tsk=taskcoach
 
 # phone remote control
 alias phone_accept='curl "http://192.168.1.66/adr.htm?number=33"'
