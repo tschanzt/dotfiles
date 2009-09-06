@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+alias ls='ls --color'
 alias ls='ls -Gh'
 alias ll='ls -l'
 alias la='ls -lA'
