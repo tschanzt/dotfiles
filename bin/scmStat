@@ -78,7 +78,8 @@ def show_status():
                     tag = tag[1:]
                 tags.append(tag)
             tags.sort()
-            latest = tags[-1]
+            if len(tags)>0:
+                latest = tags[-1]
         table.push((
                 isGit and ColorString('git', 'green') or isSvn and ColorString('svn', 'red') or '',
                 changes,

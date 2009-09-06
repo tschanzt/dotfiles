@@ -124,11 +124,11 @@ class DBLeecher(object):
         self.copy_database()
         database = self.get_selected_db()
         user_part = self.get_ssh_user() and '%s@' % self.get_ssh_user() or ''
-        cmd = 'sftp %s%s:%s var/filestorage/%s/' % (
+        cmd = 'sftp %s%s:%s %s' % (
             user_part,
             self.domain,
             database.tar_name,
-            database.name
+            self.get_local_path(),
         )
         self.run_cmd(cmd)
         print ''
@@ -136,20 +136,29 @@ class DBLeecher(object):
     def backup_and_untar(self):
         database = self.get_selected_db()
         print 'Creating backup of current local database:'
-        cmd = 'mv var/filestorage/%s/%s var/filestorage/%s/%s.bak' % (
-            database.name,
-            database.location.split('/')[-1],
-            database.name,
-            database.location.split('/')[-1],
+        ori_file = self.get_local_path() + '/%s.fs' % database.name
+        bak_file = self.get_local_path() + '/%s.fs.bak' % database.name
+        cmd = 'mv %s %s' % (
+            ori_file,
+            bak_file,
         )
         self.run_cmd(cmd)
         print ''
         print 'Unpacking archive:'
-        cmd = 'cd var/filestorage/%s ; tar -xvf %s' % (
+        cmd = 'cd %s ; tar -xvf %s' % (
+            self.get_local_path(),
             database.name,
             database.tar_name
         )
         self.run_cmd(cmd)
+
+    def get_local_path(self):
+        database = self.get_selected_db()
+        path = 'var/filestorage/%s' % database.name
+        if os.path.isdir(path):
+            return path
+        else:
+            return 'var/filestorage'
 
 
 class Database(object):

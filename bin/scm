@@ -4,6 +4,8 @@
 import os
 from optparse import OptionParser
 
+LOCAL_REPOS = '/Users/jone/projects/gitsvn/'
+
 class SCM(object):
 
     version = '0.1'
@@ -16,7 +18,9 @@ class SCM(object):
         if len(self.args)==0:
             self.parser.print_usage()
         else:
-            self.actions()[self.args[0]]()
+            args = self.args[:]
+            args.pop(0)
+            self.actions()[self.args[0]](*args)
 
     def extend_usage(self, parser):
         usage = parser.get_usage()
@@ -41,6 +45,8 @@ class SCM(object):
                 'url' :     self.url_action,
                 'sw' :      self.switch_action,
                 'switch' :  self.switch_action,
+                'get' :     self.get_action,
+                'put' :     self.put_action,
         }
  
 
@@ -91,6 +97,32 @@ class SCM(object):
         Switches a svn repo to git (using command switchSvn2Git)
         """
         runcmd('switchSvn2Git')
+
+    def get_action(self, package):
+        """
+        Checkout package from local git cache
+        """
+        package_path = os.path.join(LOCAL_REPOS, package)
+        if not os.path.isdir(package_path):
+            raise Exception('No local repository for %s' % package)
+        if os.path.isdir(package):
+            raise Exception('Folder ./%s/ already existing' % package)
+        runcmd('cd %s; git reset --hard' % package_path)
+        runcmd('cd %s; git svn fetch' % package_path)
+        runcmd('cd %s; git svn rebase' % package_path)
+        runcmd('cp -r %s .' % package_path)
+
+    def put_action(self):
+        """
+        Update local git cache with current git repository
+        """
+        if not os.path.isdir('.git'):
+            raise Exception('Only usable at the root of the git repository')
+        package = os.path.basename(os.getcwd())
+        package_cache_path = os.path.join(LOCAL_REPOS, package)
+        runcmd('rm -rf %s' % package_cache_path)
+        runcmd('cp -r . %s' % package_cache_path)
+
 
     def is_svn(self):
         return os.path.isdir('.svn')

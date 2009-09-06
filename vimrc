@@ -143,6 +143,10 @@ map qe :e<CR>
 map qqe :e!<CR>
 map qw :w<CR>
 map qqw :w!<CR>
+map qn :enew<CR>
+map qqn :enew!<CR>
+map qd :diffoff<CR>:diffthis<CR>
+map qqd :diffoff<CR>
 
 " recording
 map <F13> @a
@@ -151,8 +155,8 @@ map <F14> @b
 map <S-F14> qb
 map <F15> @c
 map <S-F15> qc
-map <F16> @d
-map <S-F16> qd
+map <F16> @p
+map <S-F16> qp
 
 "" logging, zope, python
 map lo :!~/.bin/zopeinstance logtail<CR>
@@ -172,6 +176,7 @@ autocmd BufRead *.txt set filetype=doctest
 
 
 "" FILETYPE (EXECUTE)
+autocmd FileType python map <F5> :w<CR>:!/usr/local/bin/python2.4 %<CR>
 autocmd FileType python map <F5> :w<CR>:!./%<CR>
 autocmd FileType php map <F5> :w<CR>:!php "%"<CR>
 autocmd FileType tex map <F5> :w<CR>:!/usr/texbin/pdflatex "export.tex";/usr/texbin/pdflatex "export.tex";open export.pdf<CR>

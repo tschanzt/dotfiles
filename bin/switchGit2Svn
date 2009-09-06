@@ -1,0 +1,39 @@
+#!/usr/bin/python
+
+import os, sys
+import subprocess
+
+LOCAL_REPOS = '/Users/jone/projects/gitsvn/'
+
+def quit(msg):
+    print ''
+    print '  ERROR:',msg
+    sys.exit(0)
+
+def runcmd(cmd):
+    p = os.popen(cmd, 'r')
+    l = p.readlines()
+    p.close()
+    return l
+
+def runcmdat(cmd, path, output=0):
+    current_dir = os.getcwd()
+    os.chdir(path)
+    r = ''
+    if output:
+        print '>', cmd
+        os.system(cmd)
+    else:
+        r = runcmd(cmd)
+    os.chdir(current_dir)
+    return r
+
+
+
+# is svn ?
+if not os.path.isdir('.git'):
+    quit('not in a git repository or not in repository root')
+
+url = runcmd('git svn info | grep URL | cut -d " " -f 2')[0].strip()
+runcmd('rm -rf * .*')
+runcmd('svn co %s .' % url)
