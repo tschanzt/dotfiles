@@ -47,6 +47,8 @@ class SCM(object):
                 'switch' :  self.switch_action,
                 'get' :     self.get_action,
                 'put' :     self.put_action,
+                'ie' :      self.ignore_egginfo_action,
+                'clean' :   self.clean_action,
         }
  
 
@@ -62,6 +64,12 @@ class SCM(object):
         """
         runcmd('cp IGNORE.txt .gitignore')
         runcmd('echo "\n.gitignore" >> .gitignore')
+
+    def ignore_egginfo_action(self):
+        """
+        Add *.egg-info to gitignores
+        """
+        runcmd('echo "\n*.egg-info" >> .gitignore')
 
     def pull_action(self):
         """
@@ -123,6 +131,52 @@ class SCM(object):
         runcmd('rm -rf %s' % package_cache_path)
         runcmd('cp -r . %s' % package_cache_path)
 
+    def clean_action(self):
+        """
+        Cleans up a local git repo: removes chache files and empty directories
+        """
+        REMOVE_EXTENSIONS = [
+                '.class',
+                '.mo',
+                '.pyc',
+                '.swo',
+                '.swp',
+        ]
+        IGNORE = [
+            '.git',
+        ]
+        def is_ignored(root, file):
+            if file in IGNORE:
+                return True
+            for part in root.split('/'):
+                if part in IGNORE:
+                    return True
+            return False
+        import os
+        for root,dirs,files in os.walk('.'):
+            for file in files:
+                if is_ignored(root, file):
+                    continue
+                name, ext = os.path.splitext(file)
+                if ext.lower() not in REMOVE_EXTENSIONS:
+                    continue
+                path = os.path.join(root, file)
+                try:
+                    os.remove(path)
+                    print 'removed %s' % path
+                except OSError, e:
+                    print 'ERR: could not remove %s (%s)' % (path, str(e))
+        for root,dirs,files in os.walk('.'):
+            for dir in dirs:
+                if is_ignored(root, dir):
+                    continue
+                path = os.path.join(root, dir)
+                if len(os.listdir(path))==0:
+                    try:
+                        os.removedirs(path)
+                        print 'removed %s' % path
+                    except OSError, e:
+                        print 'ERR: could not remove %s (%s)' % (path, str(e))
 
     def is_svn(self):
         return os.path.isdir('.svn')

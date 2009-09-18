@@ -1,11 +1,12 @@
 #!/bin/zsh
 
-alias ls='ls -Gh --color'
+alias ls='ls -Gh'
 alias ll='ls -l'
 alias la='ls -lA'
 alias l='la'
 alias grep='grep --color'
 alias Preview='/Applications/Preview.app/Contents/MacOS/Preview'
+alias wget='curl -O'
 
 # emacs
 alias e='emacsclient '

@@ -176,8 +176,8 @@ autocmd BufRead *.txt set filetype=doctest
 
 
 "" FILETYPE (EXECUTE)
-autocmd FileType python map <F5> :w<CR>:!/usr/local/bin/python2.4 %<CR>
 autocmd FileType python map <F5> :w<CR>:!./%<CR>
+autocmd FileType python map <F5> :w<CR>:!/usr/bin/python2.4 %<CR>
 autocmd FileType php map <F5> :w<CR>:!php "%"<CR>
 autocmd FileType tex map <F5> :w<CR>:!/usr/texbin/pdflatex "export.tex";/usr/texbin/pdflatex "export.tex";open export.pdf<CR>
 autocmd FileType tex map <F5> :w<CR>:!/usr/texbin/pdflatex "%";/usr/texbin/pdflatex "%";open %:r.pdf<CR>

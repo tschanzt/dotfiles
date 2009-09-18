@@ -72,3 +72,26 @@ function set_window_and_tab_title
 PROMPT_COMMAND='set_window_and_tab_title "$prompt - ${PWD##*/}"'
 
 
+
+# Setting PATH for MacPython 2.5
+# The orginal version is saved in .profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
+export PATH
+
+##
+# Your previous /Users/jone/.profile file was backed up as /Users/jone/.profile.macports-saved_2009-09-08_at_23:26:06
+##
+
+# MacPorts Installer addition on 2009-09-08_at_23:26:06: adding an appropriate PATH variable for use with MacPorts.
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+# Finished adapting your PATH environment variable for use with MacPorts.
+
+
+##
+# Your previous /Users/jone/.profile file was backed up as /Users/jone/.profile.macports-saved_2009-09-09_at_07:30:33
+##
+
+# MacPorts Installer addition on 2009-09-09_at_07:30:33: adding an appropriate PATH variable for use with MacPorts.
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+# Finished adapting your PATH environment variable for use with MacPorts.
+
