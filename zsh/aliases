@@ -21,7 +21,8 @@ alias d='mvimdiff'
 alias amstart='sudo /opt/local/apache2/bin/apachectl start; sudo /opt/local/bin/mysqld_safe5 &'
 alias apache2ctl='sudo /opt/local/apache2/bin/apachectl'
 alias mysqlstart='sudo mysqld_safe5 &'
-alias mysqlstop='mysqladmin5 -u root -p shutdown'
+alias mysqlstop='mysqladmin5 -u root shutdown'
+alias mysql='mysql5'
 
 # rails
 alias rss='script/server'
