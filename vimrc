@@ -147,14 +147,16 @@ map qn :enew<CR>
 map qqn :enew!<CR>
 map qd :diffoff<CR>:diffthis<CR>
 map qqd :diffoff<CR>
+map qc :r !date "+* [\%d.\%m.\%Y]  [jba]"<CR><ESC>15<RIGHT>i
+
 
 " recording
-map <F13> @a
-map <S-F13> qa
-map <F14> @b
-map <S-F14> qb
-map <F15> @c
-map <S-F15> qc
+map <F13> @i
+map <S-F13> qi
+map <F14> @l
+map <S-F14> ql
+map <F15> @o
+map <S-F15> qo
 map <F16> @p
 map <S-F16> qp
 
