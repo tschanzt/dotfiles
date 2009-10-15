@@ -147,7 +147,7 @@ map qn :enew<CR>
 map qqn :enew!<CR>
 map qd :diffoff<CR>:diffthis<CR>
 map qqd :diffoff<CR>
-map qc :r !date "+* [\%d.\%m.\%Y]  [jba]"<CR><ESC>15<RIGHT>i
+map qc O<ESC>i* <ESC>:r !date "+  [\%d.\%m.\%Y, jbaumann]"<CR>o<ESC><UP><UP>i<END>
 
 
 " recording
