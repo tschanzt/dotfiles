@@ -43,6 +43,7 @@ class SCM(object):
                 'p' :       self.push_action,
                 'push' :    self.push_action,
                 'url' :     self.url_action,
+                'ucp' :     self.url_copy_action,
                 'sw' :      self.switch_action,
                 'switch' :  self.switch_action,
                 'get' :     self.get_action,
@@ -99,6 +100,15 @@ class SCM(object):
             runcmd('svn info | grep URL')
         else:
             runcmd('git svn info | grep URL')
+
+    def url_copy_action(self):
+        """
+        copies svn-URL
+        """
+        if self.is_svn():
+            runcmd("echo -n `svn info | grep URL | cut -d ' ' -f 2` | pbcopy")
+        else:
+            runcmd("echo -n `git svn info | grep URL | cut -d ' ' -f 2` | pbcopy")
 
     def switch_action(self):
         """
