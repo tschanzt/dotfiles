@@ -148,11 +148,16 @@ map qqn :enew!<CR>
 map qd :diffoff<CR>:diffthis<CR>
 map qqd :diffoff<CR>
 map qc O<ESC>i* <ESC>:r !date "+  [\%d.\%m.\%Y, jbaumann]"<CR>o<ESC><UP><UP>i<END>
+map qqc :8<CR>qc
+map qoc lv:e configure.zcml<CR>
+map qqoc £qocn
+map qqp oimport pdb; pdb.set_trace()<ESC>:w<CR>
+map qi <HOME>ifrom <END><S-LEFT><BACKSPACE> import <ESC>
 
 
 " recording
-map <F13> @i
-map <S-F13> qi
+map <F13> @j
+map <S-F13> qj
 map <F14> @l
 map <S-F14> ql
 map <F15> @o
