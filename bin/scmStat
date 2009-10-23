@@ -9,6 +9,7 @@ COLORS = {
     'red_bold'      : '\033[1;31m%s\033[00m',
     'green_bold'    : '\033[1;32m%s\033[00m',
     'yellow_bold'   : '\033[1;33m%s\033[00m',
+    'none'          : '%s',
 }
 
 class ColorString(str):
@@ -28,6 +29,15 @@ class ColorString(str):
             s += ' ' * (width - len(self))
         return s
 
+    def __add__(self, other):
+        if isinstance(other, ColorString):
+            value = self.value + other.value
+        else:
+            value = self.value + str(other)
+        newstr = str( self ) + str( other )
+        newobj = ColorString(newstr, 'none')
+        newobj.value = value
+        return newobj
 
 def runcmd(cmd):
     p = os.popen(cmd, 'r')
@@ -66,7 +76,15 @@ def show_status():
                 branch = ColorString(url[-1] + ' (?)', 'red_bold')
         if isGit:
             if 'nothing to commit' not in ''.join(runcmd('cd %s;git status' % dir)):
-                changes = ColorString(' !', 'red_bold')
+                changes = '!'
+            ahead = runcmd(r'cd %s ; git status| grep ahead | sed -e "s/^.*\([[:digit:]]\).*$/\1/"' % dir)
+            ahead = ahead and int(ahead[0].strip()) or 0
+            if changes and ahead > 0:
+                changes = ColorString(changes, 'red_bold') + ' ' + ColorString('%i' % ahead, 'yellow_bold')
+            elif changes:
+                changes = ColorString(' ' + changes, 'red_bold')
+            elif ahead:
+                changes = ColorString('%i' % ahead, 'yellow_bold')
             branch = runcmd(r"cd %s ; git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'" % dir)[0].strip()
             if branch=='master':
                 branch = ColorString(branch, 'green')
