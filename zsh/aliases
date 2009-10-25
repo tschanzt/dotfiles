@@ -9,7 +9,7 @@ alias Preview='/Applications/Preview.app/Contents/MacOS/Preview'
 alias wget='curl -O'
 
 # emacs
-alias e='emacsclient '
+alias e='openemacs '
 
 # VIM
 alias gvimp='gvim -p'
