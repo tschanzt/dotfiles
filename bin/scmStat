@@ -84,9 +84,11 @@ def show_status():
                 ahead = ahead and int(ahead[0].strip()) or 0
             else:
                 xpr = re.compile('^Author:')
-                log = ''.join(runcmd('cd %s ; git log' % dir)).strip().split('Author:')
+                log = ''.join(runcmd('cd %s ; git log' % dir)).strip().split('Author:')[:3]
                 ahead = len([chg for chg in log if 'git-svn-id:' not in chg]) - 1
-            if changes and ahead > 0:
+                if ahead==4:
+                    ahead = '*'
+            if changes and (isinstance(ahead, str) or ahead > 0):
                 changes = ColorString(changes, 'red_bold') + ' ' + ColorString('%i' % ahead, 'yellow_bold')
             elif changes:
                 changes = ColorString(' ' + changes, 'red_bold')
