@@ -50,6 +50,7 @@ class SCM(object):
                 'put' :     self.put_action,
                 'ie' :      self.ignore_egginfo_action,
                 'clean' :   self.clean_action,
+                'master' :  self.trunk_as_master_action,
         }
  
 
@@ -188,6 +189,14 @@ class SCM(object):
                     except OSError, e:
                         print 'ERR: could not remove %s (%s)' % (path, str(e))
 
+    def trunk_as_master_action(self):
+        """
+        Checks out the trunk as master (git)
+        """
+        if runcmd('git checkout remotes/trunk')==0:
+            if runcmd('git branch -D master')==0:
+                runcmd('git checkout -b master')
+
     def is_svn(self):
         return os.path.isdir('.svn')
 
@@ -200,7 +209,7 @@ def runcmd(cmd, log=True, respond=False):
         p.close()
         return l
     else:
-        os.system(cmd)
+        return os.system(cmd)
 
 COLORS = {
     'red'           : '\033[0;31m%s\033[00m',
