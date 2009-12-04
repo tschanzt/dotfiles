@@ -67,7 +67,7 @@ function set_window_and_tab_title
     command rm -f "$cmdfile"
 }
 
-PROMPT_COMMAND='set_window_and_tab_title "$prompt - ${PWD##*/}"'
+#PROMPT_COMMAND='set_window_and_tab_title "$prompt - ${PWD##*/}"'
 
 
 
