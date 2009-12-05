@@ -1,6 +1,19 @@
 #!/usr/bin/python
 
-import os, sys
+import re, os, sys
+
+
+
+def memoize(func):
+    def _mem(*args, **kwargs):
+        key = (args, tuple(kwargs.items()))
+        dic = getattr(func, '_memoize_dict', {})
+        if key not in dic.keys():
+            dic[key] = func(*args, **kwargs)
+            setattr(func, '_memoize_dict', dic)
+        return dic[key]
+    return _mem
+
 
 COLORS = {
     'red'           : '\033[0;31m%s\033[00m',
@@ -10,7 +23,7 @@ COLORS = {
     'green_bold'    : '\033[1;32m%s\033[00m',
     'yellow_bold'   : '\033[1;33m%s\033[00m',
     'none'          : '%s',
-}
+    }
 
 class ColorString(str):
 
@@ -39,6 +52,8 @@ class ColorString(str):
         newobj.value = value
         return newobj
 
+
+@memoize
 def runcmd(cmd):
     p = os.popen(cmd, 'r')
     l = p.readlines()
@@ -46,19 +61,20 @@ def runcmd(cmd):
     return l
 
 
-def show_status():
+def show_status(show_tags, show_ahead):
     dirs = os.listdir('.')
     dirs = filter(lambda x:not x.startswith('.'), dirs)
     dirs = filter(lambda x:os.path.isdir(x), dirs)
     dirs.sort()
 
     table = ASCIITable(*[ColorString(x, 'yellow_bold') for x in
-            ('SCM', 'CHG', 'DIR', 'BRANCH', 'LATEST')
-    ])
+                         ('SCM', 'CHG', 'DIR', 'BRANCH', 'LATEST')
+                         ])
 
     for dir in dirs:
         isGit = os.path.isdir(os.path.join(dir, '.git'))
         isSvn = os.path.isdir(os.path.join(dir, '.svn'))
+        isGitSvn = isGit and runcmd('cd %s; git svn info' % dir) and True
         changes = ''
         branch = ''
         latest = ''
@@ -77,9 +93,18 @@ def show_status():
         if isGit:
             if 'nothing to commit' not in ''.join(runcmd('cd %s;git status' % dir)):
                 changes = '!'
-            ahead = runcmd(r'cd %s ; git status| grep ahead | sed -e "s/^.*\([[:digit:]]\).*$/\1/"' % dir)
-            ahead = ahead and int(ahead[0].strip()) or 0
-            if changes and ahead > 0:
+            ahead = 0
+            if show_ahead:
+                if not isGitSvn:
+                    ahead = runcmd(r'cd %s ; git status| grep ahead | sed -e "s/^.*\([[:digit:]]\).*$/\1/"' % dir)
+                    ahead = ahead and int(ahead[0].strip()) or 0
+                else:
+                    xpr = re.compile('^Author:')
+                    log = ''.join(runcmd('cd %s ; git log' % dir)).strip().split('Author:')[:3]
+                    ahead = len([chg for chg in log if 'git-svn-id:' not in chg]) - 1
+                    if ahead==4:
+                        ahead = '*'
+            if changes and (isinstance(ahead, str) or ahead > 0):
                 changes = ColorString(changes, 'red_bold') + ' ' + ColorString('%i' % ahead, 'yellow_bold')
             elif changes:
                 changes = ColorString(' ' + changes, 'red_bold')
@@ -90,21 +115,24 @@ def show_status():
                 branch = ColorString(branch, 'green')
             else:
                 branch = ColorString(branch, 'yellow_bold')
-            tags = []
-            for tag in [x.strip() for x in runcmd(r'cd %s ; git branch -a | grep tags | cut -d "/" -f 3' % dir)]:
-                if tag[0]=='v':
-                    tag = tag[1:]
-                tags.append(tag)
-            tags.sort()
-            if len(tags)>0:
-                latest = tags[-1]
+            if show_tags:
+                tags = []
+                for tag in [x.strip() for x in runcmd(r'cd %s ; git branch -a | grep tags | cut -d "/" -f 3' % dir)]:
+                    if tag[0]=='v':
+                        tag = tag[1:]
+                    tags.append(tag)
+                tags.sort()
+                if len(tags)>0:
+                    latest = tags[-1]
+            else:
+                '-'
         table.push((
                 isGit and ColorString('git', 'green') or isSvn and ColorString('svn', 'red') or '',
                 changes,
                 dir,
                 branch,
                 latest
-        ))
+                ))
     table()
 
 def pull():
@@ -189,4 +217,6 @@ if __name__=='__main__':
     elif len(sys.argv)>1 and sys.argv[1]=='push':
         push()
     else:
-        show_status()
+        show_tags = '-t' in sys.argv or '--tags' in sys.argv
+        show_ahead = '-a' in sys.argv or '--ahead' in sys.argv
+        show_status(show_tags, show_ahead)
