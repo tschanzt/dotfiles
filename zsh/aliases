@@ -26,6 +26,7 @@ alias mysql='mysql5'
 
 # rails
 alias rss='script/server'
+alias rsg='script/generate'
 
 # hamachi
 alias hamachi='sudo hamachi'
