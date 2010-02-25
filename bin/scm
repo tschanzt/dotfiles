@@ -46,6 +46,8 @@ class SCM(object):
                 'ucp' :     self.url_copy_action,
                 'sw' :      self.switch_action,
                 'switch' :  self.switch_action,
+                'to_git' :  self.switch_to_git,
+                'to_svn' :  self.switch_to_svn,
                 'get' :     self.get_action,
                 'put' :     self.put_action,
                 'ie' :      self.ignore_egginfo_action,
@@ -116,6 +118,44 @@ class SCM(object):
         Switches a svn repo to git (using command switchSvn2Git)
         """
         runcmd('switchSvn2Git')
+
+    def switch_to_git(self, *filter):
+        """
+        Switches sub-directories to git (used in src directory)
+        """
+        for dir in os.listdir('.'):
+            if not os.path.isdir(dir):
+                continue
+            if len(filter)>0:
+                found = False
+                for case in filter:
+                    if dir.startswith(case.replace('*', '')):
+                        found = True
+                if not found:
+                    continue
+            if os.path.exists(os.path.join(dir, '.git')):
+                continue
+            # lets switch
+            runcmd('cd %s; ftw sw' % dir)
+            
+    def switch_to_svn(self, *filter):
+        """
+        Switches sub-directories to svn (used in src directory)
+        """
+        for dir in os.listdir('.'):
+            if not os.path.isdir(dir):
+                continue
+            if len(filter)>0:
+                found = False
+                for case in filter:
+                    if dir.startswith(case.replace('*', '')):
+                        found = True
+                if not found:
+                    continue
+            if os.path.exists(os.path.join(dir, '.svn')):
+                continue
+            # lets switch
+            runcmd('cd %s; ftw sw' % dir)
 
     def get_action(self, package):
         """
