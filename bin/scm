@@ -44,6 +44,7 @@ class SCM(object):
                 'push' :    self.push_action,
                 'url' :     self.url_action,
                 'ucp' :     self.url_copy_action,
+                'uo' :      self.open_url_action,
                 'sw' :      self.switch_action,
                 'switch' :  self.switch_action,
                 'to_git' :  self.switch_to_git,
@@ -112,6 +113,15 @@ class SCM(object):
             runcmd("echo -n `svn info | grep URL | cut -d ' ' -f 2` | pbcopy")
         else:
             runcmd("echo -n `git svn info | grep URL | cut -d ' ' -f 2` | pbcopy")
+
+    def open_url_action(self):
+        """
+        opens the URL in the default browser
+        """
+        if self.is_svn():
+            runcmd("open `svn info | grep URL | cut -d ' ' -f 2`")
+        else:
+            runcmd("open `git svn info | grep URL | cut -d ' ' -f 2`")
 
     def switch_action(self):
         """
