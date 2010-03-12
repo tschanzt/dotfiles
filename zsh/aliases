@@ -33,8 +33,8 @@ alias rsc='script/console'
 alias hamachi='sudo hamachi'
 
 # git
-alias ga='git add'
 alias ga.='ga .'
+alias ga='git add'
 alias gb='git branch'
 alias gc='git commit'
 alias gca='git commit -a'
@@ -46,10 +46,11 @@ alias glo='git log'
 alias glog='git log'
 alias gm='git merge'
 alias gp='git push'
+alias grs='git reset --hard'
 alias gs='git status'
 alias gsm='git submodule init'
+alias gso='git show'
 alias gsv='git svn'
-alias grs='git reset --hard'
 
 # subversion
 alias setSvnExternals='svn propset svn:externals -F ./EXTERNALS.TXT .'
