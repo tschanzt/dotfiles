@@ -29,33 +29,33 @@ class SCM(object):
             usage += '  %s: %s\n' % (
                 name.ljust(10),
                 func.__doc__.strip()
-            )
+                )
         parser.set_usage(usage)
 
     def actions(self):
         return  {
-                'stat' :    self.stat_action,
-                'st' :      self.stat_action,
-                'ignore' :  self.ignore_action,
-                'i' :       self.ignore_action,
-                'l' :       self.pull_action,
-                'pull' :    self.pull_action,
-                'p' :       self.push_action,
-                'push' :    self.push_action,
-                'url' :     self.url_action,
-                'ucp' :     self.url_copy_action,
-                'uo' :      self.open_url_action,
-                'sw' :      self.switch_action,
-                'switch' :  self.switch_action,
-                'to_git' :  self.switch_to_git,
-                'to_svn' :  self.switch_to_svn,
-                'get' :     self.get_action,
-                'put' :     self.put_action,
-                'ie' :      self.ignore_egginfo_action,
-                'clean' :   self.clean_action,
-                'master' :  self.trunk_as_master_action,
-        }
- 
+            'stat' :    self.stat_action,
+            'st' :      self.stat_action,
+            'ignore' :  self.ignore_action,
+            'i' :       self.ignore_action,
+            'l' :       self.pull_action,
+            'pull' :    self.pull_action,
+            'p' :       self.push_action,
+            'push' :    self.push_action,
+            'url' :     self.url_action,
+            'ucp' :     self.url_copy_action,
+            'uo' :      self.open_url_action,
+            'sw' :      self.switch_action,
+            'switch' :  self.switch_action,
+            'to_git' :  self.switch_to_git,
+            'to_svn' :  self.switch_to_svn,
+            'get' :     self.get_action,
+            'put' :     self.put_action,
+            'ie' :      self.ignore_egginfo_action,
+            'clean' :   self.clean_action,
+            'master' :  self.trunk_as_master_action,
+            }
+
 
     def stat_action(self):
         """
@@ -147,7 +147,7 @@ class SCM(object):
                 continue
             # lets switch
             runcmd('cd %s; ftw sw' % dir)
-            
+
     def switch_to_svn(self, *filter):
         """
         Switches sub-directories to svn (used in src directory)
@@ -197,15 +197,15 @@ class SCM(object):
         Cleans up a local git repo: removes chache files and empty directories
         """
         REMOVE_EXTENSIONS = [
-                '.class',
-                '.mo',
-                '.pyc',
-                '.swo',
-                '.swp',
-        ]
+            '.class',
+            '.mo',
+            '.pyc',
+            '.swo',
+            '.swp',
+            ]
         IGNORE = [
             '.git',
-        ]
+            ]
         def is_ignored(root, file):
             if file in IGNORE:
                 return True
@@ -268,7 +268,7 @@ COLORS = {
     'red_bold'      : '\033[1;31m%s\033[00m',
     'green_bold'    : '\033[1;32m%s\033[00m',
     'yellow_bold'   : '\033[1;33m%s\033[00m',
-}
+    }
 
 class ColorString(str):
 
