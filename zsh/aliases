@@ -23,7 +23,7 @@ alias apache2ctl='sudo /opt/local/apache2/bin/apachectl'
 alias mysqlstart='sudo mysqld_safe5 &'
 alias mysqlstop='mysqladmin5 -u root shutdown'
 alias mysql='mysql5'
-alias fakemail='sudo ~/.bin/fakemail.py --host=localhost --port=25 --path=~/temp/mails --background'
+alias fakemail='sudo ~/.bin/fakemail.py --host=localhost --port=25 --path=/Users/jone/temp/mails --background'
 
 # rails
 alias rss='script/server'
