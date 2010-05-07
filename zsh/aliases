@@ -56,8 +56,12 @@ alias gsv='git svn'
 # subversion
 alias setSvnExternals='svn propset svn:externals -F ./EXTERNALS.TXT .'
 alias setSvnIgnore='svn propset svn:ignore -F ./IGNORE.TXT .'
-alias ss="svn st | grep -v '^Performing' | grep -v '^$'"
-alias ssm="svn st | grep -v '^Performing' | grep -v '^$' | grep -v '^X'"
+
+# scm
+alias ssd='scm stash dry'
+alias ss='scm stash'
+alias ssa='scm stash apply'
+alias ssl='scm stash list'
 
 rationalise-dot() {
 if [[ $LBUFFER = *.. ]]; then
@@ -70,7 +74,18 @@ zle -N rationalise-dot
 bindkey . rationalise-dot
 
 alias ..='cd ..'
-alias ...='cd ../..'
+alias ../..='cd ../..'
+alias ../../..='cd ../../..'
+alias ../../../..='cd ../../../..'
+alias ../../../../..='cd ../../../../..'
+alias ../../../../../..='cd ../../../../../..'
+alias ../../../../../../..='cd ../../../../../../..'
+alias ../../../../../../../..='cd ../../../../../../../..'
+alias ../../../../../../../../..='cd ../../../../../../../../..'
+alias ../../../../../../../../../..='cd ../../../../../../../../../..'
+alias ../../../../../../../../../../..='cd ../../../../../../../../../../..'
+alias ../../../../../../../../../../../..='cd ../../../../../../../../../../../..'
+alias ../../../../../../../../../../../../..='cd ../../../../../../../../../../../../..'
 
 
 # Mac Application aliases
