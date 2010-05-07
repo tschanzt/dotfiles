@@ -151,7 +151,7 @@ def pull():
         if isSvn:
             cmd = 'svn up %s' % dir
         elif isGit:
-            cmd = 'cd %s ; git svn rebase' % dir
+            cmd = 'cd %s ; git svn fetch; git svn rebase' % dir
         print '  %', cmd
         print ''.join(runcmd(cmd)).strip()
         print ''

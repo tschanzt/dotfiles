@@ -222,6 +222,17 @@ class SCM(object):
                     os.rename(egg_dir, os.path.join(stash, egg))
                 else:
                     print ColorString('Skipping', 'yellow'), egg
+        elif len(args)==1 and args[0]=='dry':
+            for egg in os.listdir('.'):
+                egg_dir = os.path.abspath(egg)
+                if egg_dir==stash_dir:
+                    continue
+                if os.path.exists(os.path.join(egg_dir, '.svn')):
+                    print ColorString('SVN : %s' % egg, 'green')
+                elif os.path.exists(os.path.join(egg_dir, '.git')):
+                    print ColorString('GIT : %s' % egg, 'red')
+                else:
+                    print ColorString('Skipping', 'yellow'), egg
         elif len(args)==1 and args[0]=='list':
             # list current stashes
             if len(os.listdir(stash_dir))==0:
