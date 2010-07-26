@@ -3,7 +3,7 @@ if [[ -d ./.svn ]] {
 } else {
   branch=`git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
   if [[ `echo "$branch"|wc -c` -gt "1" ]] {
-    if [[ `git status|wc -l` -gt "2" ]] {
+    if [[ `git status 2>/dev/null |wc -l` -gt "2" ]] {
       notice='*'
     } else {
       notice=''
