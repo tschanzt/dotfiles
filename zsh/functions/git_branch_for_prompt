@@ -2,6 +2,13 @@ if [[ -d ./.svn ]] {
   echo "[\033[0;36mSVN\033[00m]"
 } else {
   branch=`git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
-  echo "[\033[0;32m$branch\033[00m]"
+  if [[ `echo "$branch"|wc -c` -gt "1" ]] {
+    if [[ `git status|wc -l` -gt "2" ]] {
+      notice='*'
+    } else {
+      notice=''
+    }
+    echo "[\033[0;32m$branch\033[1;31m$notice\033[00m]"
+  }
 }
 
