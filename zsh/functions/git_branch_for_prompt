@@ -1,1 +1,7 @@
-git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
+if [[ -d ./.svn ]] {
+  echo "[\033[0;36mSVN\033[00m]"
+} else {
+  branch=`git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+  echo "[\033[0;32m$branch\033[00m]"
+}
+
