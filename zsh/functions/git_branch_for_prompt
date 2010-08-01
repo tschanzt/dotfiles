@@ -1,5 +1,5 @@
 if [[ -d ./.svn ]] {
-  echo "[\033[0;36mSVN\033[00m]"
+  echo "[%{\033[0;36m%}SVN%{\033[00m%}]"
 } else {
   branch=`git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
   if [[ `echo "$branch"|wc -c` -gt "1" ]] {
@@ -7,14 +7,14 @@ if [[ -d ./.svn ]] {
     if [[ "$gslines" -gt "2" ]] {
       gsahead=`git status 2>/dev/null|grep ahead|wc -l`
       if [[ "$gsahead" -eq "1" ]] && [[ "$gslines" -eq "4" ]] {
-        notice='\033[1;35m^'
+        notice='%{\033[1;35m%}^'
       } else {
-        notice='\033[1;31m*'
+        notice='%{\033[1;31m%}*'
       }
     } else {
       notice=''
     }
-    echo "[\033[0;32m$branch$notice\033[00m]"
+    echo "[%{\033[0;32m%}$branch$notice%{\033[00m%}]"
   }
 }
 
