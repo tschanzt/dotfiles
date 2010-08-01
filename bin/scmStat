@@ -127,7 +127,9 @@ def show_status(show_tags, show_ahead):
             else:
                 '-'
         table.push((
-                isGit and ColorString('git', 'green') or isSvn and ColorString('svn', 'red') or '',
+                isGitSvn and ColorString('git-svn', 'yellow') or \
+                    isGit and ColorString('git', 'green') or \
+                    isSvn and ColorString('svn', 'red') or '',
                 changes,
                 dir,
                 branch,
@@ -142,16 +144,22 @@ def pull():
     dirs.sort()
     for dir in dirs:
         isGit = os.path.isdir(os.path.join(dir, '.git'))
+        isGitSvn = os.path.isdir(os.path.join(dir, '.git', 'svn'))
         isSvn = os.path.isdir(os.path.join(dir, '.svn'))
         if not isGit and not isSvn:
             continue
-        scm = isGit and ColorString('git', 'green') or isSvn and ColorString('svn', 'red') or ''
+        scm = isGitSvn and ColorString('git-svn', 'yellow_bold') or \
+            isGit and ColorString('git', 'green') or \
+            isSvn and ColorString('svn', 'red') or \
+            ''
         print 'pulling', ColorString(dir, 'yellow'), '(%s)' % scm
         cmd = None
         if isSvn:
             cmd = 'svn up %s' % dir
+        elif isGit and isGitSvn:
+            cmd = 'cd %s ; git pull' % dir
         elif isGit:
-            cmd = 'cd %s ; git svn rebase' % dir
+            cmd = 'cd %s ; git svn fetch; git svn rebase' % dir
         print '  %', cmd
         print ''.join(runcmd(cmd)).strip()
         print ''
@@ -164,7 +172,10 @@ def push():
     dirs.sort()
     for dir in dirs:
         print 'pushing', ColorString(dir, 'yellow')
-        cmd = 'cd %s ; git svn dcommit' % dir
+        if os.path.exists(os.path.join(dir, '.git', 'svn')):
+            cmd = 'cd %s ; git svn dcommit' % dir
+        elif os.path.exists(os.path.join(dir, '.git')):
+            cmd = 'cd %s ; git push' % dir
         print '  %', cmd
         print ''.join(runcmd(cmd)).strip()
         print ''

@@ -23,6 +23,7 @@ alias apache2ctl='sudo /opt/local/apache2/bin/apachectl'
 alias mysqlstart='sudo mysqld_safe5 &'
 alias mysqlstop='mysqladmin5 -u root shutdown'
 alias mysql='mysql5'
+alias fakemail='sudo ~/.bin/fakemail.py --host=localhost --port=25 --path=/Users/jone/temp/mails --background'
 
 # rails
 alias rss='script/server'
@@ -30,8 +31,8 @@ alias rsg='script/generate'
 alias rsc='script/console'
 
 # git
-alias ga='git add'
 alias ga.='ga .'
+alias ga='git add'
 alias gb='git branch'
 alias gc='git commit'
 alias gca='git commit -a'
@@ -43,16 +44,21 @@ alias glo='git log'
 alias glog='git log'
 alias gm='git merge'
 alias gp='git push'
+alias grs='git reset --hard'
 alias gs='git status'
 alias gsm='git submodule init'
+alias gso='git show'
 alias gsv='git svn'
-alias grs='git reset --hard'
 
 # subversion
 alias setSvnExternals='svn propset svn:externals -F ./EXTERNALS.TXT .'
 alias setSvnIgnore='svn propset svn:ignore -F ./IGNORE.TXT .'
-alias ss="svn st | grep -v '^Performing' | grep -v '^$'"
-alias ssm="svn st | grep -v '^Performing' | grep -v '^$' | grep -v '^X'"
+
+# scm
+alias ssd='scm stash dry'
+alias ss='scm stash'
+alias ssa='scm stash apply'
+alias ssl='scm stash list'
 
 rationalise-dot() {
 if [[ $LBUFFER = *.. ]]; then
@@ -65,7 +71,18 @@ zle -N rationalise-dot
 bindkey . rationalise-dot
 
 alias ..='cd ..'
-alias ...='cd ../..'
+alias ../..='cd ../..'
+alias ../../..='cd ../../..'
+alias ../../../..='cd ../../../..'
+alias ../../../../..='cd ../../../../..'
+alias ../../../../../..='cd ../../../../../..'
+alias ../../../../../../..='cd ../../../../../../..'
+alias ../../../../../../../..='cd ../../../../../../../..'
+alias ../../../../../../../../..='cd ../../../../../../../../..'
+alias ../../../../../../../../../..='cd ../../../../../../../../../..'
+alias ../../../../../../../../../../..='cd ../../../../../../../../../../..'
+alias ../../../../../../../../../../../..='cd ../../../../../../../../../../../..'
+alias ../../../../../../../../../../../../..='cd ../../../../../../../../../../../../..'
 
 
 # Mac Application aliases

@@ -188,6 +188,7 @@ autocmd FileType python map <F5> :w<CR>:!/usr/bin/python2.4 %<CR>
 autocmd FileType php map <F5> :w<CR>:!php "%"<CR>
 autocmd FileType tex map <F5> :w<CR>:!/usr/texbin/pdflatex "export.tex";/usr/texbin/pdflatex "export.tex";open export.pdf<CR>
 autocmd FileType tex map <F5> :w<CR>:!/usr/texbin/pdflatex "%";/usr/texbin/pdflatex "%";open %:r.pdf<CR>
+autocmd FileType tex map <F6> :w<CR>:!/usr/texbin/pdflatex --interaction=nonstopmode "%";/usr/texbin/pdflatex --interaction=nonstopmode "%";open %:r.pdf<CR>
 autocmd FileType tex map <F4> :w<CR>:!clearLatexCache<CR>
 "autocmd FileType tex map <F5> :w<CR>:!./build<CR>
 autocmd FileType tex map <S-F5> :w<CR>:!/usr/texbin/pdflatex %<CR>
