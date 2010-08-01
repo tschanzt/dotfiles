@@ -1,0 +1,3 @@
+[submodule "willgit"]
+	path = willgit
+	url = git://gitorious.org/willgit/mainline.git
