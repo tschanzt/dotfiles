@@ -72,9 +72,9 @@ def show_status(show_tags, show_ahead):
                          ])
 
     for dir in dirs:
-        isGit = os.path.isdir(os.path.join(dir, '.git'))
         isSvn = os.path.isdir(os.path.join(dir, '.svn'))
-        isGitSvn = isGit and runcmd('cd %s; git svn info' % dir) and True
+        isGit = not isSvn and os.path.isdir(os.path.join(dir, '.git'))
+        isGitSvn = isGit and '[svn-remote' in open(os.path.join(dir, '.git', 'config')).read()
         changes = ''
         branch = ''
         latest = ''
@@ -143,9 +143,9 @@ def pull():
     dirs = filter(lambda x:os.path.isdir(x), dirs)
     dirs.sort()
     for dir in dirs:
-        isGit = os.path.isdir(os.path.join(dir, '.git'))
-        isGitSvn = os.path.isdir(os.path.join(dir, '.git', 'svn'))
         isSvn = os.path.isdir(os.path.join(dir, '.svn'))
+        isGit = not isSvn and os.path.isdir(os.path.join(dir, '.git'))
+        isGitSvn = isGit and '[svn-remote' in open(os.path.join(dir, '.git', 'config')).read()
         if not isGit and not isSvn:
             continue
         scm = isGitSvn and ColorString('git-svn', 'yellow_bold') or \
@@ -157,9 +157,9 @@ def pull():
         if isSvn:
             cmd = 'svn up %s' % dir
         elif isGit and isGitSvn:
-            cmd = 'cd %s ; git pull' % dir
-        elif isGit:
             cmd = 'cd %s ; git svn fetch; git svn rebase' % dir
+        elif isGit:
+            cmd = 'cd %s ; git pull' % dir
         print '  %', cmd
         print ''.join(runcmd(cmd)).strip()
         print ''
@@ -171,10 +171,13 @@ def push():
     dirs = filter(lambda dir:os.path.isdir(os.path.join(dir, '.git')), dirs)
     dirs.sort()
     for dir in dirs:
+        isSvn = os.path.isdir(os.path.join(dir, '.svn'))
+        isGit = not isSvn and os.path.isdir(os.path.join(dir, '.git'))
+        isGitSvn = isGit and '[svn-remote' in open(os.path.join(dir, '.git', 'config')).read()
         print 'pushing', ColorString(dir, 'yellow')
-        if os.path.exists(os.path.join(dir, '.git', 'svn')):
+        if isGitSvn:
             cmd = 'cd %s ; git svn dcommit' % dir
-        elif os.path.exists(os.path.join(dir, '.git')):
+        elif isGit:
             cmd = 'cd %s ; git push' % dir
         print '  %', cmd
         print ''.join(runcmd(cmd)).strip()
