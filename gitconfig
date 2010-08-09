@@ -1,11 +1,11 @@
 [user]
-	name = Jonas Baumann
-	email = jone@jone.ch
+	name = Timon Tschanz
+	email = timon.tschanz@4teamwork.ch
 [color]
 	diff = auto
 	status = auto
 	branch = auto
 [core]
-	excludesfile = /Users/jone/.gitignore
+	excludesfile = /Users/timon.tschanz/.gitignore
 [github]
-	user = jone
+	user = Tschanzt
